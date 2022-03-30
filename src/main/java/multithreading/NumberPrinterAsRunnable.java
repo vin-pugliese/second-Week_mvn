@@ -13,7 +13,7 @@ public class NumberPrinterAsRunnable implements Runnable {
 
     @Override
     public void run() {
-        for(int i=0; i<max; i++)
+        for(int i=min; i<max; i++)
             L.info("runnable " + String.valueOf(i));
     }
 }

@@ -14,7 +14,7 @@ public class ThreadNumberPrinter extends Thread{
     }
 
     public void run(){
-        for(int i=0; i<max; i++){
+        for(int i=min; i<max; i++){
             L.info("threadprinter " +String.valueOf(i));
         }
     }
