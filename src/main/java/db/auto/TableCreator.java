@@ -16,7 +16,7 @@ public class TableCreator implements Runnable {
     private ReadProperties rp = new ReadProperties();
     private DBUtils dbu = new DBUtils();
 
-    public void run()  {
+    public void run() {
         try {
             conn = dbu.startConnection();
 
@@ -38,19 +38,21 @@ public class TableCreator implements Runnable {
             L.info("-----------tabella NON creata----------");
             e.printStackTrace();
         } finally {
-            try {
-                this.closeAll();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            this.closeAll();
         }
     }
 
 
-    private void closeAll() throws SQLException {
-        if (statement != null) statement.close();
-        if (conn != null) conn.close();
+    private void closeAll() {
+        try {
+            if (statement != null) statement.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-
 }
+
+
+

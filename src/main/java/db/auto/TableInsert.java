@@ -22,7 +22,7 @@ public class TableInsert implements Runnable{
         try {
             conn = dbu.startConnection();
 
-            for(int i=0; i<2; i++) {
+            for(int i=0; i<1; i++) {
 
                 ps = conn.prepareStatement("INSERT INTO auto (`marchio`, `nazione`, `fatturato`, `dipendenti`) VALUES (?,?,?,?);");
                 Scanner sc = new Scanner(System.in);
@@ -48,18 +48,19 @@ public class TableInsert implements Runnable{
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                this.closeAll();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
+            this.closeAll();
         }
     }
 
-    private void closeAll() throws SQLException {
-        if (ps != null) ps.close();
-        if (conn != null) conn.close();
-    }
+    private void closeAll()  {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
 }
+
+
