@@ -1,5 +1,6 @@
 package db.auto;
 
+import utils.DBUtils;
 import utils.Log;
 import utils.ReadProperties;
 
@@ -13,21 +14,18 @@ public class TableInsert implements Runnable{
     private Connection conn = null;
     private ReadProperties rp = new ReadProperties();
     private PreparedStatement ps;
+    DBUtils dbu = new DBUtils();
 
 
     public void run() {
 
         try {
-            conn = this.startConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            conn = dbu.startConnection();
 
-        try {
 
             for(int i=0; i<2; i++) {
 
-                ps = conn.prepareStatement("INSERT INTO auto (`marchio`, `nazione`, `fatturato`, `dipendenti`) VALUES (?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
+                ps = conn.prepareStatement("INSERT INTO auto (`marchio`, `nazione`, `fatturato`, `dipendenti`) VALUES (?,?,?,?);");
 
 
                 Scanner sc = new Scanner(System.in);
@@ -46,7 +44,7 @@ public class TableInsert implements Runnable{
 
                 ps.clearParameters();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -63,17 +61,4 @@ public class TableInsert implements Runnable{
         if (conn != null) conn.close();
     }
 
-    public Connection startConnection() throws IOException {
-        Connection conn = null;
-        rp.read();
-        try {
-            Class.forName(rp.getProperties().getProperty("db.driverUrl")).newInstance();
-            conn = DriverManager.getConnection(rp.getProperties().getProperty("db.url"), rp.getProperties().getProperty("db.username"), rp.getProperties().getProperty("db.password"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return conn;
-    }
 }

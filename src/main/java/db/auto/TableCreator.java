@@ -1,6 +1,7 @@
 package db.auto;
 
 import db.first_DB.DBConstant;
+import utils.DBUtils;
 import utils.Log;
 import utils.ReadProperties;
 
@@ -13,14 +14,12 @@ public class TableCreator implements Runnable {
     private Connection conn;
     private Statement statement;
     private ReadProperties rp = new ReadProperties();
+    private DBUtils dbu = new DBUtils();
 
     public void run()  {
         try {
-            conn = this.startConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
+            conn = dbu.startConnection();
+
             String sql = "CREATE TABLE IF NOT EXISTS `db`.`auto` (" +
                     "  `idAuto` INT NOT NULL AUTO_INCREMENT," +
                     "  `marchio` VARCHAR(45) NOT NULL," +
@@ -35,8 +34,7 @@ public class TableCreator implements Runnable {
             L.info("tabella creata");
 
 
-        } catch (
-                SQLException e) {
+        } catch (SQLException | IOException e) {
             L.info("-----------tabella NON creata----------");
             e.printStackTrace();
         } finally {
