@@ -13,7 +13,7 @@ public class TableInsert implements Runnable{
     static Log L = Log.getInstance();
     private Connection conn = null;
     private ReadProperties rp = new ReadProperties();
-    private PreparedStatement ps;
+    private PreparedStatement ps = null;
     DBUtils dbu = new DBUtils();
 
 
@@ -22,19 +22,20 @@ public class TableInsert implements Runnable{
         try {
             conn = dbu.startConnection();
 
-
             for(int i=0; i<2; i++) {
 
                 ps = conn.prepareStatement("INSERT INTO auto (`marchio`, `nazione`, `fatturato`, `dipendenti`) VALUES (?,?,?,?);");
-
-
                 Scanner sc = new Scanner(System.in);
+
                 System.out.println("Inserisci marchio");
                 ps.setString(1, sc.nextLine());
+
                 System.out.println("nInserisci nazione");
                 ps.setString(2, sc.nextLine());
+
                 System.out.println("Inserisci fatturatoo");
                 ps.setInt(3, sc.nextInt());
+
                 System.out.println("Inserisci dipendenti");
                 ps.setInt(4, sc.nextInt());
 

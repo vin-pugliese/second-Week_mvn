@@ -1,6 +1,6 @@
 package db.auto;
 
-import db.first_DB.DBConstant;
+
 import utils.DBUtils;
 import utils.Log;
 import utils.ReadProperties;
@@ -46,21 +46,6 @@ public class TableCreator implements Runnable {
         }
     }
 
-
-    public Connection startConnection() throws IOException {
-        Connection conn = null;
-        rp.read();
-        try {
-            Class.forName(rp.getProperties().getProperty("db.driverUrl")).newInstance();
-            conn = DriverManager.getConnection(rp.getProperties().getProperty("db.url"), rp.getProperties().getProperty("db.username"), rp.getProperties().getProperty("db.password"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return conn;
-
-    }
 
     private void closeAll() throws SQLException {
         if (statement != null) statement.close();
