@@ -24,8 +24,8 @@ public class DBUtils {
         Connection conn = null;
         rp.read();
         try {
-            Class.forName(rp.getProperties().getProperty("db.driverUrl")).newInstance();
-            conn = DriverManager.getConnection(rp.getProperties().getProperty("db.url"), rp.getProperties().getProperty("db.username"), rp.getProperties().getProperty("db.password"));
+            Class.forName(rp.getDbdriver()).newInstance();
+            conn = DriverManager.getConnection(rp.getDburl(), rp.getUser(), rp.getPsw());
             L.info("Connection with database established");
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();

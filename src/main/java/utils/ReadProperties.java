@@ -43,7 +43,7 @@ public class ReadProperties {
         this.properties.load(inputStream);
     }
 
-    public static void main(String[] args)  {
+ /*   public static void main(String[] args)  {
         ReadProperties rp = new ReadProperties();
 
         rp.init();
@@ -64,7 +64,7 @@ public class ReadProperties {
             e.printStackTrace();
 
         }
-    }
+    }*/
 
 
 
