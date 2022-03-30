@@ -66,6 +66,47 @@ public class ReadProperties {
         }
     }
 
+
+
+
+
+
+    public String getUser() {
+        String user = this.properties.getProperty("db.username");
+        return user;
+    }
+
+    public void setUser(String user) {
+        //this.user = user;
+    }
+
+    public String getPsw() {
+        String psw = this.properties.getProperty("db.password");
+        return psw;
+    }
+
+    public void setPsw(String psw) {
+        //this.psw = psw;
+    }
+
+    public String getDburl() {
+        String dburl = this.properties.getProperty("db.url");
+        return dburl;
+    }
+
+    public void setDburl(String dburl) {
+        //this.dburl = dburl;
+    }
+
+    public String getDbdriver() {
+        String dbdriver= this.properties.getProperty("db.driverUrl");
+        return dbdriver;
+    }
+
+    public void setDbdriver(String dbdriver) {
+       // this.dbdriver = dbdriver;
+    }
+
     public static Log getL() {
         return L;
     }

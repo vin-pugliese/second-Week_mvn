@@ -27,7 +27,7 @@ public class TableCreator implements Runnable {
                     " `nazione` VARCHAR(20) NOT NULL, " +
                     " `fatturato` INT NOT NULL, " +
                     " `dipendenti` INT NOT NULL, " +
-                    "  PRIMARY KEY (`idAuto`));";
+                    "  PRIMARY KEY (`idAuto`)); ";
 
 
             statement = conn.createStatement();

@@ -24,24 +24,27 @@ public class TableInsert implements Runnable{
         }
 
         try {
-            Scanner sc = new Scanner(System.in);
-            for(int i=0; i<6; i++) {
-                ps = conn.prepareStatement("INSERT INTO auto (`idAuto`, `marchio`, `nazione`, `fatturato`, `dipendenti`) VALUES (default, ?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
+
+            for(int i=0; i<2; i++) {
+
+                ps = conn.prepareStatement("INSERT INTO auto (`marchio`, `nazione`, `fatturato`, `dipendenti`) VALUES (?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
 
 
-
+                Scanner sc = new Scanner(System.in);
                 System.out.println("Inserisci marchio");
-                ps.setString(2, sc.nextLine());
+                ps.setString(1, sc.nextLine());
                 System.out.println("nInserisci nazione");
-                ps.setString(3, sc.nextLine());
+                ps.setString(2, sc.nextLine());
                 System.out.println("Inserisci fatturatoo");
-                ps.setInt(4, sc.nextInt());
+                ps.setInt(3, sc.nextInt());
                 System.out.println("Inserisci dipendenti");
-                ps.setString(5, sc.nextLine());
+                ps.setInt(4, sc.nextInt());
 
 
                 if (ps.executeUpdate() != 0) L.info("Aggiunto ");
                 else L.info("non aggiunto");
+
+                ps.clearParameters();
             }
         } catch (SQLException e) {
             e.printStackTrace();
