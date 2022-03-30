@@ -9,6 +9,9 @@ public class DBUtils {
     static Log L = Log.getInstance();
     ReadProperties rp = new ReadProperties();
 
+    /**
+     * Constructor
+     */
     public DBUtils(){}
 
     /**
@@ -30,6 +33,11 @@ public class DBUtils {
         return conn;
     }
 
+    /**
+     * @method printer
+     * stampa tutti i dati contenuti nel ResulSet passato come parametro
+     * @param rs
+     */
     public void printer(ResultSet rs) {
         try {
             ResultSetMetaData md = rs.getMetaData();
