@@ -13,12 +13,22 @@ public class Test {
         ThreadNumberPrinter t = new ThreadNumberPrinter(1,10);
         NumberPrinterAsRunnable n = new NumberPrinterAsRunnable(20,30);
 
-        //Thread tn = new Thread(n);
-        //tn.start();
+        Thread tn = new Thread(n);
+        tn.setName("Nostro thread");
+        tn.start();
+
+        //in questo caso currentThread prende il valore di tn
+        Thread currentThread = Thread.currentThread();
+        currentThread.setName("current-thread");
+        currentThread.setPriority(1);
+        currentThread.run();
+
+        Thread.sleep(5000);
 
         t.start();
-        t.join();
+        //n.join();                     //non serve nel momento in cui si imposta la priorità
         n.run();
+
        // L.info("Fatto!");
 
 
