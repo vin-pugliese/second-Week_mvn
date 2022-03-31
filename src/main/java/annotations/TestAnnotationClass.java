@@ -28,4 +28,7 @@ public class TestAnnotationClass {
         Annotation[] a = c.getAnnotations();
         Arrays.stream(a);
     }
+
+
+
 }
