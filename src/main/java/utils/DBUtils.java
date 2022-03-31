@@ -6,8 +6,12 @@ import java.sql.*;
 
 public class DBUtils {
 
-    static Log L = Log.getInstance();
-    ReadProperties rp = new ReadProperties();
+    public static Log L = Log.getInstance();
+    public ReadProperties rp = new ReadProperties();
+    public Statement statement = null;
+    public PreparedStatement ps = null;
+    public ResultSet rs = null;
+    public Connection conn = null;
 
     /**
      * Constructor
@@ -38,7 +42,7 @@ public class DBUtils {
      * stampa tutti i dati contenuti nel ResulSet passato come parametro
      * @param rs
      */
-    public void printer(ResultSet rs) {
+    public void printer(ResultSet rs) throws SQLException {
         try {
             ResultSetMetaData md = rs.getMetaData();
 
@@ -48,6 +52,20 @@ public class DBUtils {
 
                 System.out.println("");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally { if(rs!=null) rs.close(); }
+    }
+
+    /**
+     * @method closeAll
+     * closes all connections - statements - preparedStaments
+     */
+    public void closeAll() {
+        try {
+            if(statement != null) statement.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

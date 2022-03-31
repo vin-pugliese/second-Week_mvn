@@ -2,21 +2,13 @@ package employees;
 
 import employees.bean.Employee;
 import utils.DBUtils;
-import utils.Log;
-import utils.ReadProperties;
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
 
-public class DBOperator {
+public class DBOperator extends DBUtils{
 
-    static Log L = Log.getInstance();
-    private Connection conn = null;
-    private PreparedStatement ps = null;
-    private DBUtils dbu = new DBUtils();
-    private ReadProperties rp = new ReadProperties();
-    private Scanner sc = new Scanner(System.in);
+    Scanner sc = Scanner_Singleton.getInstance();
 
     /**
      * @method insert
@@ -26,20 +18,20 @@ public class DBOperator {
     public void insert() {
 
         try {
-            conn = dbu.startConnection();
+            conn = this.startConnection();
             rp.read("sql.properties");
 
             Employee e = new Employee();
 
             ps = conn.prepareStatement(rp.getProperties().getProperty("insert"));
 
-            for (int i = 0; i < 1; i++) {
+           // for (int i = 0; i < 1; i++) {
                 System.out.println("Inserisci nome");
                 e.setName(sc.nextLine());
 
                 System.out.println("nInserisci cognome");
                 e.setLastname(sc.nextLine());
-            }
+           // }
             ps.setString(1, e.getName());
             ps.setString(2, e.getLastname());
 
@@ -47,7 +39,7 @@ public class DBOperator {
             if (ps.executeUpdate() != 0) L.info("Aggiunto ");
             else L.info("non aggiunto");
 
-            //ps.clearParameters();
+            ps.clearParameters();
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -62,26 +54,28 @@ public class DBOperator {
      */
     public void update() {
         try {
-            conn = dbu.startConnection();
+            //Scanner s = new Scanner(System.in);
+            conn = this.startConnection();
             rp.read("sql.properties");
 
             ps = conn.prepareStatement(rp.getProperties().getProperty("update"));
 
                 System.out.println("Inserire l'id dell'impiegato da modificare");
                 ps.setInt(3, sc.nextInt());
+                sc.nextLine();
 
-            for (int i = 0; i < 1; i++) {
+            //for (int i = 0; i < 1; i++) {
                 System.out.println("Inserire nuovo nome");
                 ps.setString(1, sc.nextLine());
 
                 System.out.println("Inserire nuovo cognome");
                 ps.setString(2, sc.nextLine());
-            }
+            //}
 
             if (ps.executeUpdate() != 0) L.info("Aggiunto ");
             else L.info("non aggiunto");
 
-            //ps.clearParameters();
+            ps.clearParameters();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } finally {
@@ -95,7 +89,7 @@ public class DBOperator {
      */
     public void delete() {
         try {
-            conn = dbu.startConnection();
+            conn = this.startConnection();
             rp.read("sql.properties");
 
             ps = conn.prepareStatement(rp.getProperties().getProperty("delete"));
@@ -123,14 +117,14 @@ public class DBOperator {
         ResultSet rs = null;
         Statement statement = null;
         try {
-            conn = dbu.startConnection();
+            conn = this.startConnection();
             rp.read("sql.properties");
 
             statement = conn.createStatement();
 
             rs = statement.executeQuery(rp.getProperties().getProperty("select"));
 
-            dbu.printer(rs);
+            this.printer(rs);
         } catch (IOException | SQLException e) {
             e.getMessage();
         } finally {
@@ -139,16 +133,5 @@ public class DBOperator {
     }
 
 
-    /**
-     * @method closeAll
-     * closes all connections - statements - preparedStaments
-     */
-    private void closeAll() {
-        try {
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

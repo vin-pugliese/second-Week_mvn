@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Gui_Manager implements Runnable{
 
     DBOperator dbo = new DBOperator();
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = Scanner_Singleton.getInstance();
 
 
     @Override

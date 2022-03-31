@@ -1,27 +1,17 @@
 package employees;
 
 import utils.DBUtils;
-import utils.Log;
-import utils.ReadProperties;
-
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public class TableCreator implements Runnable{
 
-    static Log L = Log.getInstance();
-    private Connection conn;
-    private Statement statement;
-    private ReadProperties rp = new ReadProperties();
-    private DBUtils dbu = new DBUtils();
+public class TableCreator extends DBUtils implements Runnable{
 
     public void run() {
         try {
-            rp.read("sql.properties");
-            conn = dbu.startConnection();
+            conn = this.startConnection();
 
+            rp.read("sql.properties");
             String sql = rp.getProperties().getProperty("createTable");
 
             statement = conn.createStatement();
@@ -37,13 +27,4 @@ public class TableCreator implements Runnable{
         }
     }
 
-
-    private void closeAll() {
-        try {
-            if (statement != null) statement.close();
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
