@@ -12,7 +12,6 @@ public class TableInsert implements Runnable{
 
     static Log L = Log.getInstance();
     private Connection conn = null;
-    private ReadProperties rp = new ReadProperties();
     private PreparedStatement ps = null;
     DBUtils dbu = new DBUtils();
 
