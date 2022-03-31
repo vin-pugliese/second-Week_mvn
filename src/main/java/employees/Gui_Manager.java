@@ -1,12 +1,16 @@
 package employees;
 
+import java.util.Scanner;
+
 public class Gui_Manager implements Runnable{
 
     DBOperator dbo = new DBOperator();
-    CommandLineUtility c = CommandLineUtility.getInstance();
+    Scanner sc = new Scanner(System.in);
+
 
     @Override
     public void run() {
+
         int x;
         do{
             System.out.println("\nScegli l'operazione: \n" +
@@ -15,7 +19,7 @@ public class Gui_Manager implements Runnable{
                     "3 - Modifica\n" +
                     "4 - Elimina\n" +
                     "-1 - esci");
-            x = c.intFromCommand();
+            x = sc.nextInt();
             switch (x){
                 case 1:
                     dbo.showAll();

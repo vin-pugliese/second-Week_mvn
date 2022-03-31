@@ -1,5 +1,6 @@
 package employees;
 
+import employees.bean.Employee;
 import utils.DBUtils;
 import utils.Log;
 import utils.ReadProperties;
@@ -13,32 +14,74 @@ public class DBOperator {
     static Log L = Log.getInstance();
     private Connection conn = null;
     private PreparedStatement ps = null;
-    DBUtils dbu = new DBUtils();
-    ReadProperties rp = new ReadProperties();
+    private DBUtils dbu = new DBUtils();
+    private ReadProperties rp = new ReadProperties();
+    private Scanner sc = new Scanner(System.in);
 
-
-
+    /**
+     * @method insert
+     * Adds a new row to db
+     */
+    @Logger(item = "We are into insert")
     public void insert() {
 
         try {
             conn = dbu.startConnection();
             rp.read("sql.properties");
 
+            Employee e = new Employee();
+
             ps = conn.prepareStatement(rp.getProperties().getProperty("insert"));
-            CommandLineUtility c = CommandLineUtility.getInstance();
-            for(int i=0; i<1; i++) {
+
+            for (int i = 0; i < 1; i++) {
                 System.out.println("Inserisci nome");
-                ps.setString(1, c.stringFromCommand());
+                e.setName(sc.nextLine());
 
                 System.out.println("nInserisci cognome");
-                ps.setString(2, c.stringFromCommand());
+                e.setLastname(sc.nextLine());
+            }
+            ps.setString(1, e.getName());
+            ps.setString(2, e.getLastname());
+
+
+            if (ps.executeUpdate() != 0) L.info("Aggiunto ");
+            else L.info("non aggiunto");
+
+            //ps.clearParameters();
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeAll();
+        }
+    }
+
+    /**
+     * @method update
+     * update a row in the table Employees via the given ID
+     */
+    public void update() {
+        try {
+            conn = dbu.startConnection();
+            rp.read("sql.properties");
+
+            ps = conn.prepareStatement(rp.getProperties().getProperty("update"));
+
+                System.out.println("Inserire l'id dell'impiegato da modificare");
+                ps.setInt(3, sc.nextInt());
+
+            for (int i = 0; i < 1; i++) {
+                System.out.println("Inserire nuovo nome");
+                ps.setString(1, sc.nextLine());
+
+                System.out.println("Inserire nuovo cognome");
+                ps.setString(2, sc.nextLine());
             }
 
             if (ps.executeUpdate() != 0) L.info("Aggiunto ");
             else L.info("non aggiunto");
 
-            ps.clearParameters();
-
+            //ps.clearParameters();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         } finally {
@@ -46,45 +89,22 @@ public class DBOperator {
         }
     }
 
-    public void update() {
-        try {
-            conn = dbu.startConnection();
-            rp.read("sql.properties");
-            CommandLineUtility c = CommandLineUtility.getInstance();
-            ps = conn.prepareStatement(rp.getProperties().getProperty("update"));
-
-            System.out.println("Inserire l'id dell'impiegato da modificare");
-            ps.setInt(3, c.intFromCommand());
-
-            System.out.println("Inserire nuovo nome");
-            ps.setString(1, c.stringFromCommand());
-
-            System.out.println("Inserire nuovo cognome");
-            ps.setString(2, c.stringFromCommand());
-
-            if (ps.executeUpdate() != 0) L.info("Aggiunto ");
-            else L.info("non aggiunto");
-
-            ps.clearParameters();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } finally {
-            this.closeAll();
-        }
-    }
-
+    /**
+     * @method delete
+     * deletes a row in the table Employees via the given ID
+     */
     public void delete() {
         try {
             conn = dbu.startConnection();
             rp.read("sql.properties");
-            CommandLineUtility c = CommandLineUtility.getInstance();
+
             ps = conn.prepareStatement(rp.getProperties().getProperty("delete"));
 
             System.out.println("Inserire l'id dell'impiegato da eliminare");
-            ps.setInt(1, c.intFromCommand());
+            ps.setInt(1, sc.nextInt());
 
-            if (ps.executeUpdate() != 0) L.info("Aggiunto ");
-            else L.info("non aggiunto");
+            if (ps.executeUpdate() != 0) L.info("Eliminato ");
+            else L.info("non Eliminato");
 
             ps.clearParameters();
         } catch (SQLException | IOException e) {
@@ -95,7 +115,11 @@ public class DBOperator {
 
     }
 
-    public void showAll(){
+    /**
+     * @method showAll
+     * prints all the rows in the table Employees
+     */
+    public void showAll() {
         ResultSet rs = null;
         Statement statement = null;
         try {
@@ -114,6 +138,11 @@ public class DBOperator {
         }
     }
 
+
+    /**
+     * @method closeAll
+     * closes all connections - statements - preparedStaments
+     */
     private void closeAll() {
         try {
             if (ps != null) ps.close();

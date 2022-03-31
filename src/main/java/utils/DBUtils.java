@@ -43,9 +43,10 @@ public class DBUtils {
             ResultSetMetaData md = rs.getMetaData();
 
             while (rs.next()) {
-                System.out.println("");
                 for (int i = 1; i <= md.getColumnCount(); i++)
-                    System.out.print("\t" +rs.getString(i));
+                    System.out.print(rs.getString(i) +"\t\t");
+
+                System.out.println("");
             }
         } catch (SQLException e) {
             e.printStackTrace();
