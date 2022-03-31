@@ -35,6 +35,14 @@ public class ReadProperties {
 
     }
 
+
+    public void read(String resourceName) throws IOException {
+
+        inputStream = new FileInputStream("src/main/resources/" +resourceName);
+
+        this.properties.load(inputStream);
+    }
+
     public void read() throws IOException {
 
         this.resourceName = "application.properties";

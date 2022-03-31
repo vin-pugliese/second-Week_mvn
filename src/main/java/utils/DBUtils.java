@@ -22,7 +22,7 @@ public class DBUtils {
      */
     public Connection startConnection() throws IOException {
         Connection conn = null;
-        rp.read();
+        rp.read("application.properties");
         try {
             Class.forName(rp.getDbdriver()).newInstance();
             conn = DriverManager.getConnection(rp.getDburl(), rp.getUser(), rp.getPsw());
@@ -45,7 +45,7 @@ public class DBUtils {
             while (rs.next()) {
                 System.out.println("");
                 for (int i = 1; i <= md.getColumnCount(); i++)
-                    L.info(rs.getString(i));
+                    System.out.print("\t" +rs.getString(i));
             }
         } catch (SQLException e) {
             e.printStackTrace();
