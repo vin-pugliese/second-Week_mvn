@@ -40,8 +40,9 @@ public class GUI implements Runnable {
                     oc.findAll();
                     break;
                 case 3:
-                    System.out.println("Inserisci l'id del cliente da modificare\n ");
+                    System.out.println("Inserisci l'id del cliente da modificare");
                     c.setId(sc.nextInt());
+                    sc.nextLine();      //workaround that prevents scanner from skipping inputs
 
                     c = this.clientQuestions(c);
 

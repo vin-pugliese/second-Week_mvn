@@ -42,8 +42,9 @@ public class Client_CRUD extends DBUtils implements Ops<Client>{
 
             ps = conn.prepareStatement(rp.getProperties().getProperty("updateClient"));
 
+            ps.setInt(4, x.getId());
             ps.setString(1, x.getFirstName());
-            ps.setString(2, x.getFirstName());
+            ps.setString(2, x.getLastName());
             ps.setInt(3, x.getAge());
 
 
