@@ -120,7 +120,7 @@ public class Order_CRUD extends DBUtils implements Ops<Order> {
         }
     }
 
-    public void findByForeignKey(int x){
+    public void findByForeignKey(int x) {
         try {
             conn = this.startConnection("market.properties");
             rp.read("market.properties");

@@ -16,8 +16,6 @@ public class GUI implements Runnable {
 
     @Override
     public void run() {
-
-
         int x;
         do {
             System.out.println("\nScegli l'operazione: \n" +
@@ -45,17 +43,13 @@ public class GUI implements Runnable {
                     System.out.println("Inserisci l'id del cliente da modificare");
                     c.setId(sc.nextInt());
                     sc.nextLine();      //workaround that prevents scanner from skipping inputs
-
                     c = this.clientQuestions(c);
-
                     cc.update(c);
                     break;
                 case 4:
-
                     System.out.println("Inserisci l'id dell'ordine da modificare\n");
                     o.setIdOrder(sc.nextInt());
                     o = this.orderQuestions(o);
-
                     oc.update(o);
                     break;
                 case 5:
@@ -64,7 +58,6 @@ public class GUI implements Runnable {
                     cc.insert(c);
                     break;
                 case 6:
-
                     o = this.orderQuestions(o);
                     oc.insert(o);
                     break;
@@ -80,6 +73,16 @@ public class GUI implements Runnable {
                     System.out.println("Inserisci id cliente:\n");
                     oc.findByForeignKey(sc.nextInt());
                     break;
+                case 10:
+                    System.out.println("Inserisci l'id del cliente da eliminare\n");
+                    c.setId(sc.nextInt());
+                    cc.delete(c);
+                    break;
+                case 11:
+                    System.out.println("Inserisci l'id dell'ordine da eliminare\n");
+                    o.setIdOrder(sc.nextInt());
+                    oc.delete(o);
+                    break;
                 case -1:
                     System.exit(0);
             }
@@ -87,6 +90,12 @@ public class GUI implements Runnable {
 
     }
 
+    /**
+     * @method clientQuestions
+     * Takes a Client c as parameter and fills its fields taking inputs from command Line
+     * @param c
+     * @return Client c
+     */
     private Client clientQuestions(Client c) {
         //sc.nextLine();
         System.out.println("Inserisci nome");
@@ -102,6 +111,11 @@ public class GUI implements Runnable {
 
     }
 
+    /**
+     * Takes a Order o as parameter and fills its fields taking inputs from command Line
+     * @param o
+     * @return Order o
+     */
     private Order orderQuestions(Order o) {
         sc.nextLine();
         System.out.println("Inserisci numero ordine");
