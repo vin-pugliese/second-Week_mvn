@@ -4,9 +4,8 @@ import marketDB.bean.Client;
 import utils.DBUtils;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 public class Client_CRUD extends DBUtils implements Ops<Client>{
 
@@ -82,14 +81,14 @@ public class Client_CRUD extends DBUtils implements Ops<Client>{
     }
 
     @Override
-    public void findByKey(Client x) {
+    public void findByKey(int id) {
         try {
             conn = this.startConnection("market.properties");
             rp.read("market.properties");
 
             ps = conn.prepareStatement(rp.getProperties().getProperty("findbykeyClient"));
 
-            ps.setInt(1, x.getId());
+            ps.setInt(1, id);
 
             rs = ps.executeQuery();
             this.printer(rs);

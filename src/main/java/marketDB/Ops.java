@@ -8,7 +8,7 @@ public interface Ops<T> {
 
     void delete(T x);
 
-    void findByKey(T x);
+    void findByKey(int id);
 
     void findAll();
 

@@ -80,14 +80,14 @@ public class Order_CRUD extends DBUtils implements Ops<Order> {
     }
 
     @Override
-    public void findByKey(Order x) {
+    public void findByKey(int id) {
         try {
             conn = this.startConnection("market.properties");
             rp.read("market.properties");
 
             ps = conn.prepareStatement(rp.getProperties().getProperty("findbykeyOrder"));
 
-            ps.setInt(1, x.getIdOrder());
+            ps.setInt(1, id);
 
             rs = ps.executeQuery();
             this.printer(rs);
@@ -120,14 +120,14 @@ public class Order_CRUD extends DBUtils implements Ops<Order> {
         }
     }
 
-    public void findByForeignKey(Order x){
+    public void findByForeignKey(int x){
         try {
             conn = this.startConnection("market.properties");
             rp.read("market.properties");
 
             ps = conn.prepareStatement(rp.getProperties().getProperty("findbyFkey"));
 
-            ps.setInt(1, x.getId_client() );
+            ps.setInt(1, x);
 
             rs = ps.executeQuery();
             this.printer(rs);
