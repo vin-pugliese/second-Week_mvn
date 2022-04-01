@@ -56,7 +56,7 @@ public class GUI implements Runnable {
                     oc.update(o);
                     break;
                 case 5:
-                    System.out.println("Inserisci l'id del cliente da aggiungere\n");
+                    sc.nextLine();      //workaround that prevents scanner from skipping inputs
                     c = this.clientQuestions(c);
                     cc.insert(c);
                     break;
@@ -85,7 +85,7 @@ public class GUI implements Runnable {
     }
 
     private Client clientQuestions(Client c) {
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Inserisci nome");
         c.setFirstName(sc.nextLine());
 
