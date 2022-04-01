@@ -38,6 +38,12 @@ public class DBUtils {
         return conn;
     }
 
+    /**
+     * Inizializza una nuova connessione prendendo l'url del database dal file passato come parametro
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public Connection startConnection(String file) throws IOException {
         Connection conn = null;
         rp.read(file);
