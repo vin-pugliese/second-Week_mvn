@@ -1,6 +1,6 @@
 package db.olympic;
 
-import employees.DBOperator;
+import db.olympic.Bean.Athlete;
 import employees.Scanner_Singleton;
 
 import java.text.ParseException;
@@ -48,7 +48,8 @@ public class CommandLine implements Runnable {
                    dbo.update(b);
                     break;
                 case 4:
-                   // dbo.delete();
+                    System.out.println("Inserisci l'id\n");
+                    dbo.delete(sc.nextInt());
                     break;
                 case 5:
                     System.out.println("Inserisci l'id\n");
@@ -66,16 +67,18 @@ public class CommandLine implements Runnable {
     }
 
     private Athlete askQuestions (Athlete a){
+        sc.nextLine();
         System.out.println("Inserisci nome");
         a.setName(sc.nextLine());
 
         System.out.println("Inserisci nazione");
         a.setNation(sc.nextLine());
 
-        System.out.println("Inserisci data di nascita dd/MM/yyyy");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");        /////////////
+        System.out.println("Inserisci data di nascita yyyy/MM/dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");        /////////////
         try {
-            Date date = sdf.parse(sc.nextLine());
+            String s = sc.nextLine();
+            Date date = sdf.parse(s);
             a.setBirthday(date);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -89,6 +92,6 @@ public class CommandLine implements Runnable {
 
     private void printList(List<Athlete> x){
         for(Athlete a:x)
-            a.toString();
+            System.out.println(a.toString());
     }
 }

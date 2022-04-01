@@ -1,36 +1,20 @@
 package db.olympic;
 
+import db.olympic.Bean.Athlete;
 import utils.DBUtils;
 
 import java.io.IOException;
-import java.sql.ResultSet;
+
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class DBOps extends DBUtils implements baseRepo<Athlete> {
 
     //Scanner sc = new Scanner(System.in);
-
-    public void createSchema(){
-
-        try {
-            conn = this.newSchemaConnection();
-            statement = conn.createStatement();
-            rp.read("athlete.properties");
-            String sql = rp.getProperties().getProperty("newSchema");
-
-            statement.executeUpdate(sql);
-            L.info("Database creato");
-
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        } finally {this.closeAll();}
-    }
 
 
     @Override
@@ -46,7 +30,7 @@ public class DBOps extends DBUtils implements baseRepo<Athlete> {
             ps.setDate(3, getSQLDate(x.getBirthday()));
             ps.setDouble(4, x.getHeight());
 
-            if (ps.executeUpdate() != 0) L.info("Aggiunto " +x.getName());
+            if (ps.executeUpdate() != 0) L.info("Aggiunto " + x.getName());
             else L.info("non aggiunto");
 
             ps.clearParameters();
@@ -60,7 +44,23 @@ public class DBOps extends DBUtils implements baseRepo<Athlete> {
 
     @Override
     public void delete(int id) {
+        try {
+            conn = this.startConnection("athlete.properties");
+            rp.read("athlete.properties");
 
+            ps = conn.prepareStatement(rp.getProperties().getProperty("delete"));
+
+            ps.setInt(1, id);
+
+            if (ps.executeUpdate() != 0) L.info("Eliminato ");
+            else L.info("non Eliminato");
+
+            ps.clearParameters();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeAll();
+        }
     }
 
     @Override
@@ -77,8 +77,8 @@ public class DBOps extends DBUtils implements baseRepo<Athlete> {
             ps.setDouble(4, x.getHeight());
             ps.setInt(5, x.getId());
 
-            if (ps.executeUpdate() != 0) L.info("Atleta id:" + x.getId() +" modificato");
-            else L.info("Atleta id:" + x.getId() +" non modificato");
+            if (ps.executeUpdate() != 0) L.info("Atleta id:" + x.getId() + " modificato");
+            else L.info("Atleta id:" + x.getId() + " non modificato");
 
             ps.clearParameters();
 
@@ -134,16 +134,44 @@ public class DBOps extends DBUtils implements baseRepo<Athlete> {
 
     @Override
     public List<Athlete> findAll(double height) {
-        return null;
+        List<Athlete> x = new ArrayList<Athlete>();
+        try {
+            conn = this.startConnection("athlete.properties");
+            rp.read("athlete.properties");
+
+            ps = conn.prepareStatement(rp.getProperties().getProperty("selecteight"));
+
+            ps.setDouble(1, height);
+
+            rs = ps.executeQuery();
+            Athlete y = new Athlete();
+            ResultSetMetaData md = rs.getMetaData();
+
+            while (rs.next()) {
+                y.setId(rs.getInt(1));
+                y.setName(rs.getString(2));
+                y.setNation(rs.getString(3));
+                y.setBirthday(rs.getDate(4));
+                y.setHeight(rs.getDouble(5));
+                x.add(y);
+            }
+            ps.clearParameters();
+            rs.close();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeAll();
+        }
+        return x;
     }
 
     /**
-     * @Method getSQLDate
-     * casts a java.util.date into a SQL.date in order to execute CRUD operations
      * @param date
      * @return
+     * @Method getSQLDate
+     * casts a java.util.date into a SQL.date in order to execute CRUD operations
      */
-    private java.sql.Date getSQLDate(Date date){
+    private java.sql.Date getSQLDate(Date date) {
         long timeInMilliSeconds = date.getTime();
         java.sql.Date date1 = new java.sql.Date(timeInMilliSeconds);
         return date1;
