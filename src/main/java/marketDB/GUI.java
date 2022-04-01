@@ -29,7 +29,9 @@ public class GUI implements Runnable {
                     "6 - Inserisci ordine\n" +
                     "7 - Trova cliente\n" +
                     "8 - Trova ordine\n" +
-                    "9 - Trova clienti da ordini\n" +
+                    "9 - Trova tutti gli ordini di un cliente\n" +
+                    "10 - Elimina cliente\n" +
+                    "11 - Elimina ordine\n" +
                     "-1 - esci\n");
             x = sc.nextInt();
             switch (x) {
@@ -75,7 +77,7 @@ public class GUI implements Runnable {
                     oc.findByKey(sc.nextInt());
                     break;
                 case 9:
-                    System.out.println("trova un cliente inserendo un id ordine:\n");
+                    System.out.println("Inserisci id cliente:\n");
                     oc.findByForeignKey(sc.nextInt());
                     break;
                 case -1:
