@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data @NoArgsConstructor @AllArgsConstructor
+
 @Entity
 public class Person {
 
@@ -23,10 +23,41 @@ public class Person {
     @Column(length = 30)
     private String lastname;
 
-    @OneToMany(
-            mappedBy ="family",
-            cascade = {CascadeType.ALL}
-    )
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
+    }
+
+    @OneToMany(
+            mappedBy = "family"
+            ,cascade = {CascadeType.ALL}
+    )
     private List<Person> persons = new ArrayList<Person>();
 }
