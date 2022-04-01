@@ -62,7 +62,7 @@ public class GUI implements Runnable {
                     cc.insert(c);
                     break;
                 case 6:
-                    System.out.println("Inserisci l'id del cliente da aggiungere\n");
+
                     o = this.orderQuestions(o);
                     oc.insert(o);
                     break;
