@@ -97,7 +97,6 @@ public class GUI implements Runnable {
      * @return Client c
      */
     private Client clientQuestions(Client c) {
-        //sc.nextLine();
         System.out.println("Inserisci nome");
         c.setFirstName(sc.nextLine());
 
@@ -117,7 +116,7 @@ public class GUI implements Runnable {
      * @return Order o
      */
     private Order orderQuestions(Order o) {
-        sc.nextLine();
+        sc.nextLine();      //workaround that prevents scanner from skipping inputs
         System.out.println("Inserisci numero ordine");
         o.setNOrder(sc.nextLine());
 
