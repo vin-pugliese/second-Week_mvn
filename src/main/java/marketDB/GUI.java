@@ -47,7 +47,7 @@ public class GUI implements Runnable {
                     cc.update(c);
                     break;
                 case 4:
-                    System.out.println("Inserisci l'id dell'ordine da modificare\n");
+                    System.out.println("Inserisci l'id dell'ordine da modificare");
                     o.setIdOrder(sc.nextInt());
                     o = this.orderQuestions(o);
                     oc.update(o);
@@ -62,24 +62,24 @@ public class GUI implements Runnable {
                     oc.insert(o);
                     break;
                 case 7:
-                    System.out.println("Inserisci l'id del cliente da cercare:\n");
+                    System.out.println("Inserisci l'id del cliente da cercare:");
                     cc.findByKey(sc.nextInt());
                     break;
                 case 8:
-                    System.out.println("Inserisci l'id dell'ordine da cercare:\n");
+                    System.out.println("Inserisci l'id dell'ordine da cercare:");
                     oc.findByKey(sc.nextInt());
                     break;
                 case 9:
-                    System.out.println("Inserisci id cliente:\n");
+                    System.out.println("Inserisci id cliente:");
                     oc.findByForeignKey(sc.nextInt());
                     break;
                 case 10:
-                    System.out.println("Inserisci l'id del cliente da eliminare\n");
+                    System.out.println("Inserisci l'id del cliente da eliminare");
                     c.setId(sc.nextInt());
                     cc.delete(c);
                     break;
                 case 11:
-                    System.out.println("Inserisci l'id dell'ordine da eliminare\n");
+                    System.out.println("Inserisci l'id dell'ordine da eliminare");
                     o.setIdOrder(sc.nextInt());
                     oc.delete(o);
                     break;
