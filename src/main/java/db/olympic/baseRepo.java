@@ -1,5 +1,7 @@
 package db.olympic;
 
+import db.olympic.Bean.Athlete;
+
 import java.util.List;
 
 public interface baseRepo<T> {
