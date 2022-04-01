@@ -5,6 +5,7 @@ target
 src/main/java/db/first_DB/DBConstant.java
 src/main/resources/application.properties
 src/main/resources/META-INF/persistence.xml
+src/main/resources/athlete.properties
 
 # Compiled class file
 *.class

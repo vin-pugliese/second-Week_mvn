@@ -37,6 +37,39 @@ public class DBUtils {
         return conn;
     }
 
+    public Connection startConnection(String file) throws IOException {
+        Connection conn = null;
+        rp.read(file);
+        try {
+            Class.forName(rp.getDbdriver()).newInstance();
+            conn = DriverManager.getConnection(rp.getDburl(), rp.getUser(), rp.getPsw());
+            L.info("Connection with database established");
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
+
+
+    /**
+     * creates connection for a new schema
+     * @return
+     * @throws IOException
+     */
+    public Connection newSchemaConnection() throws IOException {
+        Connection conn = null;
+        rp.read("application.properties");
+        try {
+            Class.forName(rp.getDbdriver()).newInstance();
+            conn = DriverManager.getConnection(rp.getProperties().getProperty("newschemaUrl"), rp.getUser(), rp.getPsw());
+            L.info("Connection with database established");
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
     /**
      * @method printer
      * stampa tutti i dati contenuti nel ResulSet passato come parametro
@@ -70,4 +103,6 @@ public class DBUtils {
             e.printStackTrace();
         }
     }
+
+
 }

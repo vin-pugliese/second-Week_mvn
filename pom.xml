@@ -31,6 +31,12 @@
             <artifactId>persistence-api</artifactId>
             <version>1.0b</version>
         </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.27</version>
+        </dependency>
     </dependencies>
 
     <build>
