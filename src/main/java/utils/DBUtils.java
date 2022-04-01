@@ -8,6 +8,7 @@ public class DBUtils {
 
     public static Log L = Log.getInstance();
     public ReadProperties rp = new ReadProperties();
+    public ReadProperties rp2 = new ReadProperties();
     public Statement statement = null;
     public PreparedStatement ps = null;
     public ResultSet rs = null;
@@ -40,9 +41,10 @@ public class DBUtils {
     public Connection startConnection(String file) throws IOException {
         Connection conn = null;
         rp.read(file);
+        rp2.read("application.properties");
         try {
             Class.forName(rp.getDbdriver()).newInstance();
-            conn = DriverManager.getConnection(rp.getDburl(), rp.getUser(), rp.getPsw());
+            conn = DriverManager.getConnection(rp.getDburl(), rp2.getUser(), rp2.getPsw());
             L.info("Connection with database established");
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
