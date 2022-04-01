@@ -10,5 +10,7 @@ public interface Ops<T> {
 
     void findByKey(T x);
 
+    void findAll();
+
 
 }

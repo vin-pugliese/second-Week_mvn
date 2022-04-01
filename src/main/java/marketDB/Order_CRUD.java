@@ -1,29 +1,27 @@
 package marketDB;
 
-import marketDB.bean.Client;
+import marketDB.bean.Order;
 import utils.DBUtils;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public class Client_CRUD extends DBUtils implements Ops<Client>{
+public class Order_CRUD extends DBUtils implements Ops<Order> {
 
 
     @Override
-    public void insert(Client x) {
+    public void insert(Order x) {
         try {
             conn = this.startConnection("market.properties");
             rp.read("market.properties");
 
-            ps = conn.prepareStatement(rp.getProperties().getProperty("insertClient"));
+            ps = conn.prepareStatement(rp.getProperties().getProperty("insertOrder"));
 
-            ps.setString(1, x.getFirstName());
-            ps.setString(2, x.getLastName());
-            ps.setInt(3, x.getAge());
+            ps.setString(1, x.getNOrder());
+            ps.setInt(2, x.getId_client());
 
-            if (ps.executeUpdate() != 0) L.info("Aggiunto " + x.getFirstName());
+
+            if (ps.executeUpdate() != 0) L.info("Aggiunto ordine" + x.getNOrder());
             else L.info("non aggiunto");
 
             ps.clearParameters();
@@ -36,20 +34,20 @@ public class Client_CRUD extends DBUtils implements Ops<Client>{
     }
 
     @Override
-    public void update(Client x) {
+    public void update(Order x) {
         try {
             conn = this.startConnection("market.properties");
             rp.read("market.properties");
 
-            ps = conn.prepareStatement(rp.getProperties().getProperty("updateClient"));
+            ps = conn.prepareStatement(rp.getProperties().getProperty("updateOrder"));
 
-            ps.setString(1, x.getFirstName());
-            ps.setString(2, x.getFirstName());
-            ps.setInt(3, x.getAge());
+            ps.setString(1, x.getNOrder());
+            ps.setInt(2, x.getId_client());
+            ps.setInt(3, x.getIdOrder());
 
 
-            if (ps.executeUpdate() != 0) L.info("Cliente id:" + x.getId() + " modificato");
-            else L.info("Cliente id:" + x.getId() + " non modificato");
+            if (ps.executeUpdate() != 0) L.info("Cliente id:" + x.getNOrder() + " modificato");
+            else L.info("Cliente id:" + x.getNOrder() + " non modificato");
 
             ps.clearParameters();
 
@@ -61,14 +59,14 @@ public class Client_CRUD extends DBUtils implements Ops<Client>{
     }
 
     @Override
-    public void delete(Client x) {
+    public void delete(Order x) {
         try {
             conn = this.startConnection("market.properties");
             rp.read("market.properties");
 
-            ps = conn.prepareStatement(rp.getProperties().getProperty("deleteClient"));
+            ps = conn.prepareStatement(rp.getProperties().getProperty("deleteOrder"));
 
-            ps.setInt(1, x.getId());
+            ps.setInt(1, x.getIdOrder());
 
             if (ps.executeUpdate() != 0) L.info("Eliminato ");
             else L.info("non Eliminato");
@@ -82,14 +80,14 @@ public class Client_CRUD extends DBUtils implements Ops<Client>{
     }
 
     @Override
-    public void findByKey(Client x) {
+    public void findByKey(Order x) {
         try {
             conn = this.startConnection("market.properties");
             rp.read("market.properties");
 
-            ps = conn.prepareStatement(rp.getProperties().getProperty("findbykeyClient"));
+            ps = conn.prepareStatement(rp.getProperties().getProperty("findbykeyOrder"));
 
-            ps.setInt(1, x.getId());
+            ps.setInt(1, x.getIdOrder());
 
             rs = ps.executeQuery();
             this.printer(rs);
@@ -112,7 +110,7 @@ public class Client_CRUD extends DBUtils implements Ops<Client>{
 
             statement = conn.createStatement();
 
-            rs = statement.executeQuery(rp.getProperties().getProperty("selectClient"));
+            rs = statement.executeQuery(rp.getProperties().getProperty("selectOrder"));
 
             this.printer(rs);
         } catch (IOException | SQLException e) {
@@ -121,4 +119,28 @@ public class Client_CRUD extends DBUtils implements Ops<Client>{
             this.closeAll();
         }
     }
+
+    public void findByForeignKey(Order x){
+        try {
+            conn = this.startConnection("market.properties");
+            rp.read("market.properties");
+
+            ps = conn.prepareStatement(rp.getProperties().getProperty("findbyFkey"));
+
+            ps.setInt(1, x.getId_client() );
+
+            rs = ps.executeQuery();
+            this.printer(rs);
+
+            ps.clearParameters();
+            rs.close();
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeAll();
+        }
+    }
+
 }
+

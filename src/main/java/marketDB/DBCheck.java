@@ -29,10 +29,10 @@ public class DBCheck extends DBUtils implements Runnable {
             statement.executeUpdate(sql2);
             L.info("tabella clienti creata");
 
-            conn.close();
+            //conn.close();
             statement.close();
 
-            conn = this.startConnection("market.properties");
+            //conn = this.startConnection("market.properties");
 
             String sql3 = rp.getProperties().getProperty("createordini");
 

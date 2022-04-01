@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data @ToString @NoArgsConstructor @AllArgsConstructor
-public class Orders {
+public class Order {
 
     private int idOrder;
     private String nOrder;
